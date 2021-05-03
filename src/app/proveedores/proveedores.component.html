@@ -1,0 +1,66 @@
+<header>
+  <mat-toolbar color="primary">Usando Angular 11 Bootstrap 4</mat-toolbar>
+</header>
+
+<div class="spinner-container" *ngIf="dataSource.cargando$ | async">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
+  <mat-card>
+    <div flex>
+            <div class="example-table-container">  
+              <mat-card>
+                <table mat-table [dataSource]="dataSource" class="example-table" >
+                  <!-- Title Column -->
+                  <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef>Id</th>
+                    <td mat-cell *matCellDef="let row">{{row.id}}</td>
+                  </ng-container>
+
+                  <!-- State Column -->
+                  <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                    <td mat-cell *matCellDef="let row">{{row.name}}</td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClicked(row)"></tr>
+              </table>
+              </mat-card>
+              <mat-paginator [length]="resultsLength" [pageSize]="3" [pageSizeOptions]="[3, 5, 10]"></mat-paginator>
+            </div> 
+        </div>
+  
+        <div flex>
+              <app-proveedor-detalle [proveedor]="selectedProveedor"></app-proveedor-detalle>
+        </div> 
+    </mat-card>
+           
+    <div layout="column">
+              <h2>Agregar Proveedor</h2>
+                <div>
+                  <mat-card>
+                    <mat-form-field appearance="fill">
+                      <mat-label>Nombre</mat-label>
+                      <input matInput for="new-proveedor" #proveedorName>
+                    </mat-form-field>
+                  </mat-card>
+                  <mat-card>
+                    <mat-form-field appearance="fill">
+                      <mat-label>Id:</mat-label>
+                      <input matInput for="new-proveedor" #proveedorId>
+                    </mat-form-field>
+                  </mat-card>
+                  <mat-card>
+                  <!-- (click) passes input value to agregar() and then clears the input -->
+                  <button class="add-button" (click)="agregar(proveedorName.value, proveedorId.value ); proveedorName.value=''; proveedorId.value=''  " >
+                    Agregue un proveedor
+                  </button>
+                  </mat-card>
+                </div>
+    </div>
+  </div>
+  
+<footer></footer>
+
